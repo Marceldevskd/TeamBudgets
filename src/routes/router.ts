@@ -10,5 +10,4 @@ router.use("/admin", adminRouter);
 router.use("/budget", budgetRouter);
 router.use("/transaction", transactionRouter);
 
-
 export default router;
