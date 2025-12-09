@@ -30,6 +30,7 @@
   "homepage": "https://github.com/Marceldevskd/TeamBudgets#readme",
   "dependencies": {
     "express": "^5.2.1",
+    "joi": "^18.0.2",
     "pg": "^8.16.3"
   },
   "devDependencies": {

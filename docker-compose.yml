@@ -9,6 +9,8 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql
+      - ./database/schemas/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
+      - ./database/seeders/init.sql:/docker-entrypoint-initdb.d/002-seed.sql:ro
 
   backend: 
     image: node:latest
@@ -18,12 +20,11 @@ services:
     volumes:
       - ./:/app 
       - /app/node_modules
-      - /app/database/migrations
     ports:
       - "9001:9001"
     environment:
       DATABASE_URL: postgres://${DB_USER:-username}:${DB_PASSWORD:-password}@db:5432/${DB_NAME:-mydatabase}
-    command: sh -c "npm install && npm run migrate && npm run dev"
+    command: sh -c "npm install && npm run dev"
 
 volumes:
   db_data:
