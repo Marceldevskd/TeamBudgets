@@ -15,10 +15,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "tsx src/scripts/migrations.ts"
   },
-  "imports": {
-    "#controllers": "./src/controllers/*",
-    "#database": "./src/database"
-  },
+  "paths": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Marceldevskd/TeamBudgets.git"
