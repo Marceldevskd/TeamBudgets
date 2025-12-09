@@ -4,7 +4,7 @@ class BudgetValidator {
     public getBudgets() {
         return joi.object({
             active_only: joi.boolean().optional(),
-            team_id: joi.string().uuid().optional(),
+            team_id: joi.number().optional(),
             team_name: joi.string().optional(),
             person_name: joi.string().optional()
         });    

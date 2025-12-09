@@ -1,3 +1,4 @@
+import { date } from "joi";
 import pool from "../../database";
 
 import { GetBudgetsRequest, GetBudgetsResponse } from "../../routes/budget/types";
@@ -9,23 +10,18 @@ export async function getBudgetsService(req: GetBudgetsRequest, res: GetBudgetsR
     const values: any[] = [];
 
     if (active_only !== undefined) {
-        values.push(active_only === true);
-        conditions.push(`active = $${values.length}`);
+        conditions.push(`start_date <= CURRENT_DATE AND end_date >= CURRENT_DATE`);
     }
 
     if (team_id) {
         values.push(team_id);
-        conditions.push(`team_id = $${values.length}`);
-    }
-
-    if (team_name) {
-        values.push(team_name);
-        conditions.push(`team_name ILIKE '%' || $${values.length} || '%'`);
-    }
-
-    if (person_name) {
-        values.push(person_name);
-        conditions.push(`person_name ILIKE '%' || $${values.length} || '%'`);
+        conditions.push(`id = $${values.length}`);
+    } else if (team_name) {
+        values.push((await pool.query("SELECT id FROM teams WHERE name = $1", [team_name])).rows[0].id);
+        conditions.push(`id = $${values.length}`);
+    } else if (person_name) {
+        values.push((await pool.query("SELECT team FROM people WHERE name = $1", [person_name])).rows[0].team);
+        conditions.push(`id = $${values.length}`);
     }
 
     // final SQL
@@ -34,7 +30,8 @@ export async function getBudgetsService(req: GetBudgetsRequest, res: GetBudgetsR
         FROM budgets
         ${conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : ""}
     `;
-
+    console.log(sql, values);
     const result = await pool.query(sql, values);
+
     res.status(200).json(result.rows);
 }
