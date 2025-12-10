@@ -14,7 +14,6 @@ interface GetBudgetsResponseBody {
     amount: number;
     start_date: string;
     end_date: string;
-    active: boolean;
 }
 
 // GET /budgets?activeOnly=true&teamId=123

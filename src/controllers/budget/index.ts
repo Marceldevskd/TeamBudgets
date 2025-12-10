@@ -6,17 +6,17 @@ export const getBudgetsController = async (req: GetBudgetsRequest, res: GetBudge
     try {
         if (req.query.team_id !== undefined) {
             if (!await team_id_exists(req.query.team_id as string)) {
-                return res.status(400).send({ error: `Team ID does not exist` });
+               return res.status(200).send([]); // Return empty array if team id does not exist
             }
         }
         if (req.query.team_name !== undefined) {
             if (!await team_name_exists(req.query.team_name as string)) {
-                return res.status(400).send({ error: `Team name does not exist` });
+                return res.status(200).send([]); // Return empty array if team name does not exist
             }
         }
         if (req.query.person_name !== undefined) {
             if (!await person_name_exists(req.query.person_name as string)) {
-                return res.status(400).send({ error: `Person name does not exist` });
+                return res.status(200).send([]); // Return empty array if person name does not exist
             }
         }
         
