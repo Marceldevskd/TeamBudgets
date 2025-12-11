@@ -12,19 +12,19 @@ services:
       - ./database/schemas/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
       - ./database/seeders/init.sql:/docker-entrypoint-initdb.d/002-seed.sql:ro
 
-  backend: 
-    image: node:latest
-    working_dir: /app
-    depends_on:
-      - db
-    volumes:
-      - ./:/app 
-      - /app/node_modules
-    ports:
-      - "9001:9001"
-    environment:
-      DATABASE_URL: postgres://${DB_USER:-username}:${DB_PASSWORD:-password}@db:5432/${DB_NAME:-mydatabase}
-    command: sh -c "npm install && npm run dev"
+  # backend: 
+  #   image: node:latest
+  #   working_dir: /app
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - ./:/app 
+  #     - /app/node_modules
+  #   ports:
+  #     - "9001:9001"
+  #   environment:
+  #     DATABASE_URL: postgres://${DB_USER:-username}:${DB_PASSWORD:-password}@db:5432/${DB_NAME:-mydatabase}
+  #   command: sh -c "npm install && npm run dev"
 
 volumes:
   db_data:
