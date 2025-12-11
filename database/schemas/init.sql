@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS people (
 
 CREATE TABLE IF NOT EXISTS budgets (
     id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
     team SERIAL REFERENCES teams(id),
     amount DECIMAL(15, 2) NOT NULL,
     start_date DATE NOT NULL,
