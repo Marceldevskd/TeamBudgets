@@ -1,4 +1,4 @@
-import joi from "joi";
+import joi, { date } from "joi";
 
 class TransactionValidator {
     public getTransactions() {
@@ -15,6 +15,7 @@ class TransactionValidator {
             person_name: joi.string().required(),
             amount: joi.number().required(),
             description: joi.string().required(),
+            date: joi.date().optional() // may use current date if not provided, is needed for testing
         });
     };
 };

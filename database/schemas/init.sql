@@ -19,3 +19,12 @@ CREATE TABLE IF NOT EXISTS budgets (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id SERIAL PRIMARY KEY,
+    person SERIAL REFERENCES people(id),
+    budget SERIAL REFERENCES budgets(id),
+    amount DECIMAL(15, 2) NOT NULL,
+    date DATE NOT NULL,
+    description TEXT
+);

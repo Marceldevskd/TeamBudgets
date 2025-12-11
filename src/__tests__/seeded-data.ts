@@ -13,8 +13,8 @@ export const people = [
 ];
 
 export const budgets = [
-    { name: '2024 budget Engineering', team: 1, amount: 100000.0, startDate: '2024-01-01', endDate: '2024-12-31' },
-    { name: '2024 summer budget Engineering', team: 1, amount: 50000.0, startDate: '2024-06-01', endDate: '2024-08-31' },
-    { name: '2023-2025 budget Marketing', team: 2, amount: 75000.0, startDate: '2023-01-01', endDate: '2025-12-31' },
-    { name: '2025 budget Engineering', team: 1, amount: 120000.0, startDate: '2025-01-01', endDate: '2025-12-31' },
+    { name: '2024 budget Engineering', team: 1, amount: 100_000.0, startDate: '2024-01-01', endDate: '2024-12-31' },
+    { name: '2024 summer budget Engineering', team: 1, amount: 50_000.0, startDate: '2024-06-01', endDate: '2024-08-31' },
+    { name: '2023-2025 budget Marketing', team: 2, amount: 75_000.0, startDate: '2023-01-01', endDate: '2025-12-31' },
+    { name: '2025-2026 budget Engineering', team: 1, amount: 120_000.0, startDate: '2025-01-01', endDate: '2026-12-31' },
 ];
