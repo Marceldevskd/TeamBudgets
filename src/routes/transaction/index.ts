@@ -1,9 +1,31 @@
 import express from "express";
+import { CreateTransactionRequest, CreateTransactionResponse } from "../../routes/transaction/types";
+import TransactionValidator from "./schema"
+import { createTransactionController } from "../../controllers/transaction";
 
 const transactionRouter = express.Router();
 
-transactionRouter.get("/", (req, res) => {
-    return res.send("Transaction Home");
+
+transactionRouter.post("/", async (req: CreateTransactionRequest, res: CreateTransactionResponse) => {
+    try {
+        if (req.body.person_name === undefined) {
+            return res.status(400).send({ error: "person_name is required" });
+        }
+
+        await TransactionValidator.createTransaction().validateAsync(req.body); // TODO: fix
+    } catch (error: any) {
+        // Joi validation error
+        if (error.isJoi && error.details) {
+            return res.status(400).send({ 
+                error: `Invalid request parameters: ${error.details[0].message}` 
+            });
+        }
+
+        // Unknown internal error
+        console.error(error);
+        return res.status(500).send({ error: "Internal server error" });
+    }
+    return createTransactionController(req, res);
 });
 
 export default transactionRouter;

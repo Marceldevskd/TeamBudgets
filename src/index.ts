@@ -4,6 +4,8 @@ import router from "./routes/router"
 const app = express();
 const port: number = 9001;
 
+app.use(express.json());
+
 app.use("/api", router);
 
 app.listen(port, () => {

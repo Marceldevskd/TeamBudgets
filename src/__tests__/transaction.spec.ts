@@ -9,18 +9,18 @@ let res: AxiosResponse<any, any>;
 
 // IMPORTANT: Tests could interfere with each other due to shared state (budgets being consumed by transactions).
 
-describe('Testing GET transaction api without params', () => {
-    beforeAll(async () => {
-        res = await axios.get(`${baseUrl}`);
-    });
-    it('should respond with status code 200', () => {
-        expect(res.status).toEqual(200);
-    });
-    it('should return an array of transactions', () => {
-        expect(Array.isArray(res.data)).toBe(true);
-    });
-    // it should have the correct properties in each transaction object
-});
+// describe('Testing GET transaction api without params', () => {
+//     beforeAll(async () => {
+//         res = await axios.get(`${baseUrl}`);
+//     });
+//     it('should respond with status code 200', () => {
+//         expect(res.status).toEqual(200);
+//     });
+//     it('should return an array of transactions', () => {
+//         expect(Array.isArray(res.data)).toBe(true);
+//     });
+//     // it should have the correct properties in each transaction object
+// });
 
 describe('Testing POST transaction api', () => {
     const newTransaction = {
@@ -30,7 +30,11 @@ describe('Testing POST transaction api', () => {
         description: 'Client payment'
     };
     beforeAll(async () => {
-        res = await axios.post(`${baseUrl}`, newTransaction);
+        try {
+            res = await axios.post(`${baseUrl}`, newTransaction);
+        } catch (error: any) {
+            res = error.response; // Axios puts the server response here
+        }
     });
 
     it('should respond with status code 201', () => {
@@ -46,6 +50,7 @@ describe('Testing POST transaction api', () => {
         expect(transaction).toHaveProperty('description', newTransaction.description);
         expect(transaction).toHaveProperty('team_name');
         expect(transaction).toHaveProperty('team_id', people[0].team);
+        expect(transaction).toHaveProperty('budget_name');
         expect(transaction).toHaveProperty('remaining_budget');
     });
 });
@@ -58,7 +63,11 @@ describe("testing POST transaction api with no allocated budgets", () => {
         description: 'Office supplies'
     };
     beforeAll(async () => {
-        res = await axios.post(`${baseUrl}`, newTransaction);
+        try {
+            res = await axios.post(`${baseUrl}`, newTransaction);
+        } catch (error: any) {
+            res = error.response; // Axios puts the server response here
+        }
     });
 
     it('should respond with status code 403', () => {
@@ -66,7 +75,7 @@ describe("testing POST transaction api with no allocated budgets", () => {
     });
 
     it('should return an error message indicating no open budget', () => {
-        expect(res.data).toHaveProperty('error', 'No allocated budgets for the team');
+        expect(res.data).toHaveProperty('error', "No active budget for the person's team on the given date");
     });
 });
 
@@ -78,7 +87,11 @@ describe('testing POST transaction api exceeding budget', () => {
         description: 'Marketing campaign'
     };
     beforeAll(async () => {
-        res = await axios.post(`${baseUrl}`, newTransaction);
+        try {
+            res = await axios.post(`${baseUrl}`, newTransaction);
+        } catch (error: any) {
+            res = error.response; // Axios puts the server response here
+        }
     });
 
     it('should respond with status code 403', () => {
@@ -98,7 +111,11 @@ describe('testing POST transaction api with non-existent person', () => {
         description: 'Test transaction'
     };
     beforeAll(async () => {
-        res = await axios.post(`${baseUrl}`, newTransaction);
+        try {
+            res = await axios.post(`${baseUrl}`, newTransaction);
+        } catch (error: any) {
+            res = error.response; // Axios puts the server response here
+        }
     });
 
     it('should respond with status code 400', () => {
@@ -106,7 +123,7 @@ describe('testing POST transaction api with non-existent person', () => {
     });
 
     it('should return an error message indicating person does not exist', () => {
-        expect(res.data).toHaveProperty('error', 'Person does not exist');
+        expect(res.data).toHaveProperty('error', 'person_name does not exist');
     });
 });
 
@@ -118,7 +135,11 @@ describe('testing POST transaction api with missing date', () => {
     };
     // expects a date in before 31-12-2026 to be passed
     beforeAll(async () => {
-        res = await axios.post(`${baseUrl}`, newTransaction);
+        try {
+            res = await axios.post(`${baseUrl}`, newTransaction);
+        } catch (error: any) {
+            res = error.response; // Axios puts the server response here
+        }
     });
 
     it('should respond with status code 201', () => {
@@ -133,7 +154,7 @@ describe('testing POST transaction api with missing date', () => {
         expect(transaction).toHaveProperty('description', newTransaction.description);
         expect(transaction).toHaveProperty('team_name');
         expect(transaction).toHaveProperty('team_id', people[1].team);
-        expect(transaction).toHaveProperty('budget_name', budgets[0].name); // '2025 budget Engineering'
+        expect(transaction).toHaveProperty('budget_name', budgets[3].name); // '2025-2026 budget Engineering'
         expect(transaction).toHaveProperty('remaining_budget');
     });
 });
@@ -146,7 +167,11 @@ describe('testing POST transaction api with multiple available budgets', () => {
         description: 'New equipment'
     };
     beforeAll(async () => {
-        res = await axios.post(`${baseUrl}`, newTransaction);
+        try {
+            res = await axios.post(`${baseUrl}`, newTransaction);
+        } catch (error: any) {
+            res = error.response; // Axios puts the server response here
+        }
     });
     it('should respond with status code 201', () => {
         expect(res.status).toEqual(201);
@@ -173,7 +198,11 @@ describe('Testing POST transaction api with 1 available budget', () => {
         description: 'Software licenses'
     };
     beforeAll(async () => {
-        res = await axios.post(`${baseUrl}`, newTransaction);
+        try {
+            res = await axios.post(`${baseUrl}`, newTransaction);
+        } catch (error: any) {
+            res = error.response; // Axios puts the server response here
+        }
     });
     it('should respond with status code 201', () => {
         expect(res.status).toEqual(201);

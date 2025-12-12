@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 
-interface GetBudgetsQuery {
-    active_only?: boolean;
-    team_id?: string;
-    team_name?: string;
-    person_name?: string;
+export interface GetBudgetsRequest extends Request {
+    query: {
+        active_only?: boolean;
+        team_id?: string;
+        team_name?: string;
+        person_name?: string;
+    };
 }
 
 interface GetBudgetsResponseBody {
@@ -16,13 +18,6 @@ interface GetBudgetsResponseBody {
     end_date: string;
 }
 
-// GET /budgets?activeOnly=true&teamId=123
-export type GetBudgetsRequest = Request<
-    unknown,                    // Params
-    unknown,                    // ResBody
-    unknown,                    // ReqBody
-    GetBudgetsQuery             // Query params
->;
 
 export type GetBudgetsResponse = Response<GetBudgetsResponseBody[] | { error: string }>;
 
