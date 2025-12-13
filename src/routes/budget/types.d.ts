@@ -9,18 +9,18 @@ export interface GetBudgetsRequest extends Request {
     };
 }
 
-interface GetBudgetsResponseBody {
-    id: string;
-    team_id: string;
-    team_name: string;
-    amount: number;
-    start_date: string;
-    end_date: string;
-}
-
-
-export type GetBudgetsResponse = Response<GetBudgetsResponseBody[] | { error: string }>;
-
+export type GetBudgetsResponse = Response<
+    {
+        body: Array<{
+            id: string;
+            team_id: string;
+            team_name: string;
+            amount: number;
+            start_date: string;
+            end_date: string;
+        }>;
+    } | { error: string }
+> 
 
 export type CreateBudgetsRequest = Request<
     unknown,                    // Params
