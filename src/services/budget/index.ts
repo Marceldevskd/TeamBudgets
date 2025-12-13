@@ -32,6 +32,7 @@ export async function getBudgetsService(req: GetBudgetsRequest, res: GetBudgetsR
     `;
     console.log(sql, values);
 
-    const result = await pool.query(sql, values);
+    const result: any = await pool.query(sql, values);
+
     return res.status(200).json(result.rows);
 }
