@@ -14,8 +14,17 @@ const budgetRouter = express.Router();
 budgetRouter.get("/", async (req: GetBudgetsRequest, res: GetBudgetsResponse) => {
     try {
         await BudgetValidator.getBudgets().validateAsync(req.query);
-    } catch (error:any) {
-        return res.status(400).send({ error: `Invalid request parameters: ${error.details[0].message}` });
+    } catch (error: any) {
+        // Joi validation error
+        if (error.isJoi && error.details) {
+            return res.status(400).send({ 
+                error: `Invalid request parameters: ${error.details[0].message}` 
+            });
+        }
+
+        // Unknown internal error
+        console.error(error);
+        return res.status(500).send({ error: "Internal server error" });
     }
     return getBudgetsController(req, res);
 });
@@ -23,8 +32,17 @@ budgetRouter.get("/", async (req: GetBudgetsRequest, res: GetBudgetsResponse) =>
 budgetRouter.post("/", async (req: CreateBudgetsRequest, res: CreateBudgetsResponse) => {
     try {
         await BudgetValidator.createBudget().validateAsync(req.body);
-    } catch (error:any) {
-        return res.status(400).send({ error: `Invalid request parameters: ${error.details[0].message}` });
+    } catch (error: any) {
+        // Joi validation error
+        if (error.isJoi && error.details) {
+            return res.status(400).send({ 
+                error: `Invalid request parameters: ${error.details[0].message}` 
+            });
+        }
+
+        // Unknown internal error
+        console.error(error);
+        return res.status(500).send({ error: "Internal server error" });
     }
     return
 });
@@ -32,8 +50,17 @@ budgetRouter.post("/", async (req: CreateBudgetsRequest, res: CreateBudgetsRespo
 budgetRouter.put("/", async (req: ChangeBudgetsRequest, res: ChangeBudgetsResponse) => {
     try {
         await BudgetValidator.changeBudget().validateAsync(req.body);
-    } catch (error:any) {
-        return res.status(400).send({ error: `Invalid request parameters: ${error.details[0].message}` });
+    }catch (error: any) {
+        // Joi validation error
+        if (error.isJoi && error.details) {
+            return res.status(400).send({ 
+                error: `Invalid request parameters: ${error.details[0].message}` 
+            });
+        }
+
+        // Unknown internal error
+        console.error(error);
+        return res.status(500).send({ error: "Internal server error" });
     }
     return
 });

@@ -8,10 +8,6 @@ const transactionRouter = express.Router();
 
 transactionRouter.post("/", async (req: CreateTransactionRequest, res: CreateTransactionResponse) => {
     try {
-        if (req.body.person_name === undefined) {
-            return res.status(400).send({ error: "person_name is required" });
-        }
-
         await TransactionValidator.createTransaction().validateAsync(req.body); // TODO: fix
     } catch (error: any) {
         // Joi validation error
