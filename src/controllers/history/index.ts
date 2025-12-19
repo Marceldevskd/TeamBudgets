@@ -10,7 +10,7 @@ export const getHistoryController = async (req: GetHistoryRequest, res: GetHisto
         if (query.budget_id !== undefined) {
             const exists = await checkIfExists("budgets", "id", query.budget_id as string);
             if (!exists) {
-                return res.status(400).send({error: "Budget ID does not exist"}); 
+                return res.status(200).send({error: "Budget ID does not exist"}); 
             }
             return getHistoryService(req, res);
         } else if (query.budget_name !== undefined) {

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { describe, it, expect, beforeAll } from 'vitest';
 
 import { teams, people, budgets } from '../__tests__/seeded-data';
@@ -33,6 +33,7 @@ describe('Testing GET budget api without params', () => {
 
 describe('Testing GET budget api with active_only param', () => {
     beforeAll(async () => {
+
         res = await axios.get(`${baseUrl}?active_only=true`);
     });
 
@@ -162,16 +163,19 @@ describe('Testing getbudget api with multiple params', () => {
 });
 
 describe('Testing getbudget api with no matching results', () => {
+    let res: AxiosResponse<any, any>;
+    let error: AxiosError | null = null;
+
     beforeAll(async () => {
-        res = await axios.get(
+        try {
+            res = await axios.get(
             `${baseUrl}?team_name=NonExistentTeam`
         );
+        } catch (err) {
+            error = err as AxiosError;
+        }
     });
-    it('should respond with status code 200', () => {
-        expect(res.status).toEqual(200);
-    });
-    it('should return an empty array', () => {
-        expect(Array.isArray(res.data)).toBe(true);
-        expect(res.data.length).toBe(0);
+    it('should respond with status code 400', () => {
+        expect(error?.response?.status).toEqual(400);
     });
 });

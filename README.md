@@ -36,7 +36,3 @@ npx vitest
 ## TODO
 
 - Technology choices
-- History route
-- Add new budget
-- Swagger docs
-- exists cleanup
