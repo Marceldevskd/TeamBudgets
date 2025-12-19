@@ -27,20 +27,20 @@ export const getBudgetsController = async (req: GetBudgetsRequest, res: GetBudge
     }
 };
 
-export const createBudgetController = async (req: CreateBudgetsRequest, res: CreateBudgetsResponse) => {
-    try {
-        // Your logic to create a budget goes here
-        return;
-    } catch (error) {
-        return res.status(500).send({ error: "Internal Server Error" });
-    }
-};
+// export const createBudgetController = async (req: CreateBudgetsRequest, res: CreateBudgetsResponse) => {
+//     try {
+//         // Your logic to create a budget goes here
+//         return;
+//     } catch (error) {
+//         return res.status(500).send({ error: "Internal Server Error" });
+//     }
+// };
 
-export const changeBudgetController = async (req: ChangeBudgetsRequest, res: ChangeBudgetsResponse) => {
-    try {
-        // Your logic to change a budget goes here
-        return;
-    } catch (error) {
-        return res.status(500).send({ error: "Internal Server Error" });
-    }
-};
+// export const changeBudgetController = async (req: ChangeBudgetsRequest, res: ChangeBudgetsResponse) => {
+//     try {
+//         // Your logic to change a budget goes here
+//         return;
+//     } catch (error) {
+//         return res.status(500).send({ error: "Internal Server Error" });
+//     }
+// };

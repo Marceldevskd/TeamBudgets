@@ -30,9 +30,15 @@ export async function getBudgetsService(req: GetBudgetsRequest, res: GetBudgetsR
         JOIN teams ON budgets.team = teams.id
         ${conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : ""}
     `;
-    console.log(sql, values);
 
     const result: any = await pool.query(sql, values);
+
+    result.rows = result.rows
+        .filter((row: any) => row.amount !== null && row.amount !== undefined)
+        .map((row: any) => ({
+            ...row,
+            amount: Number(row.amount)
+        }));
 
     return res.status(200).json(result.rows);
 }
