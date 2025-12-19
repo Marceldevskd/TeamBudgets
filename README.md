@@ -33,6 +33,8 @@ npm run dev
 npx vitest
 ```
 
+- docs are available at <http://localhost:9001/api-docs>
+
 ## Technology choices
 
 ### Backend
