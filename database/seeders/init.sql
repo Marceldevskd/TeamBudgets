@@ -1,4 +1,3 @@
-
 -- Seed Teams
 INSERT INTO teams (id, name) VALUES
   (1, 'Engineering'),
