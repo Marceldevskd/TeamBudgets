@@ -1,8 +1,8 @@
-# TeamBudgets - Lightbase Assessment
+# TeamBudgets
 
 ## Description
 
-TeamBudgets enables teams at Lightbase to manage shared budgets for software, hardware, and conferences. Key features include:
+TeamBudgets enables teams to manage shared budgets for software, hardware, and conferences. Key features include:
 
 - **Shared budgets** accessible to all team members
 - **Time-limited validity** (e.g., annual or seasonal budgets)
